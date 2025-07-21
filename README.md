@@ -1,3 +1,7 @@
+Create a virtual environment with python in your desired location
+
+pip-install flask to the virtual environment
+
 Use server_run.bat to start the file, it runs the flask server from the Backend.py file.
 
 Use the longer http link, as this loads the images properly.
