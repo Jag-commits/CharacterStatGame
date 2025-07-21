@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naruto Stat Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+            margin:0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .gamebox{
+            background-color: #ccc;
+            padding: 90px 40px;
+            border-radius:40px;
+            text-align:center;
+            box-shadow:0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        h1{
+            text-align:center;
+            text-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+        }
+        .gridcontainer{
+            display:grid;
+            grid-template-columns: repeat(3,1fr);
+            gap:20px;
+        }
+        .grid-item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .lableans{
+            font-size: 2rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #414141;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color,padding 0.3s ease;
+            box-shadow:  0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        button:hover{
+            background-color: #585858;
+            padding: 12px 23px;
+        }
+        .buttonset{
+            padding: 10px 5px;
+            margin-top: 40px;
+            border: none;
+            border-radius: 10px;
+            background-color: #1d1d1d;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color,padding 0.3s ease;
+            box-shadow:  0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class ="gamebox">
+        <h1>Naruto Stat Game</h1>
+        <div class="gridcontainer">
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="Gif Image" id="img1"></img>
+                <label id="btn1l">Body</label>
+                <button id="btn1">Body</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="Gif Image" id="img2"></img>
+                <label id="btn2l">Clan</label>
+                <button id="btn2">Clan</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img3"></img>
+                <label id="btn3l">Mind</label>
+                <button id="btn3">Mind</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img4"></img>
+                <label id="btn4l">Talent</label>
+                <button id="btn4">Talent</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img5"></img>
+                <label id="btn5l">Chakra</label>
+                <button id="btn5">Chakra</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img6"></img>
+                <label id="btn6l">Jutsu</label>
+                <button id="btn6">Jutsu</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img7"></img>
+                <label id="btn7l">Dojutsu</label>
+                <button id="btn7">Dojutsu</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img8"></img>
+                <label id="btn8l">Kyubi</label>
+                <button id="btn8">Kyubi</button>
+            </div>
+            <div class="grid-item">
+                <img src="https://i.imgur.com/1piDyat.gif" alt="" id="img9"></img>
+                <label id="btn9l">Taijutsu</label>
+                <button id="btn9">Taijutsu</button>
+                
+            </div>
+        
+    </div>
+    <label id="ans"></label>
+    <div class="reset-pos">
+        <button id="reset" class="buttonset">reset</button>
+    </div>
+    
+    
+
+    </div>
+</body>
+<script>
+    <!-- "This was incorrectly phrased where the Jquery would run the get /body and the /answer at the same time. Answer was received first from API, so if it was the last value, it wouldn't show the answer as the answer isn't revealed until the body command is finished. This meant it would never show the answer otherwise"-->
+    $(document).ready(function() {
+            $('#btn1').click(function() {
+                $.get('/body', function(data) {
+                    $('#btn1l').text(data.values);
+                    $('#img1').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                        $('#ans').text(data.values);
+                });
+                $('#btn1').prop('disabled', true);
+                
+                }); 
+                
+            });
+        });
+    $(document).ready(function() {
+            $('#btn2').click(function() {
+                $.get('/clan', function(data) {
+                    $('#btn2l').text(data.values);
+                    $('#img2').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                    $('#ans').text(data.values);
+                }); 
+                });
+                $('#btn2').prop('disabled', true);
+               
+            });
+    });
+    $(document).ready(function() {
+            $('#btn3').click(function() {
+                $.get('/mind', function(data) {
+                    $('#btn3l').text(data.values);
+                    $('#img3').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                    $('#ans').text(data.values);
+                }); 
+                });
+                $('#btn3').prop('disabled', true);
+                
+            });
+    });
+    $(document).ready(function() {
+            $('#btn4').click(function() {
+                $.get('/talent', function(data) {
+                    $('#btn4l').text(data.values);
+                    $('#img4').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                        $('#ans').text(data.values);
+                });
+                $('#btn4').prop('disabled', true);
+                
+                }); 
+            });
+    });
+    $(document).ready(function() {
+            $('#btn5').click(function() {
+                $.get('/chakra', function(data) {
+                    $('#btn5l').text(data.values);
+                    $('#img5').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                        $('#ans').text(data.values);
+                });
+                $('#btn5').prop('disabled', true);
+                
+                }); 
+            });
+    });
+    $(document).ready(function() {
+            $('#btn6').click(function() {
+                $.get('/jutsu', function(data) {
+                    $('#btn6l').text(data.values);
+                    $('#img6').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                        $('#ans').text(data.values);
+                });
+                $('#btn6').prop('disabled', true);
+                
+                    
+                }); 
+            });
+    });
+    $(document).ready(function() {
+            $('#btn7').click(function() {
+                $.get('/doj', function(data) {
+                    $('#btn7l').text(data.values);
+                    $('#img7').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                    $('#ans').text(data.values);
+                });
+                });
+                $('#btn7').prop('disabled', true);
+                 
+            });
+    });
+    $(document).ready(function() {
+            $('#btn8').click(function() {
+                $.get('/kyubi', function(data) {
+                    $('#btn8l').text(data.values);
+                    $('#img8').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                    $('#ans').text(data.values);
+                }); 
+                });
+                $('#btn8').prop('disabled', true);
+                
+            });
+    });
+    $(document).ready(function() {
+            $('#btn9').click(function() {
+                $.get('/taijutsu', function(data) {
+                    $('#btn9l').text(data.values);
+                    $('#img9').attr('src', data.image);
+                    $.get('/answer', function(data) {
+                    $('#ans').text(data.values);
+                }); 
+                });
+                $('#btn9').prop('disabled', true);
+                
+                
+            });
+    });
+        $(document).ready(function() {
+            $('#reset').click(function() {
+                $.get('/reset', function(data) {
+                    $('#btn1l').text("Body");
+                    $('#btn2l').text("Clan");
+                    $('#btn3l').text("Mind");
+                    $('#btn4l').text("Talent");
+                    $('#btn5l').text("Chakra");
+                    $('#btn6l').text("Jutsu");
+                    $('#btn7l').text("Dojutsu");
+                    $('#btn8l').text("Kyubi");
+                    $('#btn9l').text("Taijutsu");
+                    for (let i = 1; i <= 9; i++) {
+                    $(`#btn${i}`).prop('disabled', false);
+                    }
+                    for (let i = 1; i <= 9; i++) {
+                    $(`#img${i}`).attr('src', "https://i.imgur.com/1piDyat.gif");
+                    }
+                    $('#ans').text("");
+                    
+                    
+                    
+
+                });
+            });
+        });
+</script>
+</html>
